@@ -110,6 +110,15 @@ def letraC():
 	plt.savefig('resources-impact.png', format='png')
 	plt.clf()
 
+
+	plt.clf()
+	plt.scatter(normalized_data_frame['CPU'], normalized_data_frame['Disk 2'] )
+	plt.xlabel('CPU')
+	plt.ylabel('Disk 2')
+	plt.title('Scatter Plot')
+	plt.savefig('scatter-plot.png', format='png')
+	plt.clf()
+
 def letraD():
 	print('''\n\nLetra (d)\n\tO fator de maior impacto é a CPU, representado 80%.
 		 	\n\tAssim, pode ser unicamente utilizado para a clusterização dos dados.\n\n\n''')
