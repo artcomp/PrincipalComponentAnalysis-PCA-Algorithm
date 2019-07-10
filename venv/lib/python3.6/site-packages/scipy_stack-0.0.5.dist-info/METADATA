@@ -1,0 +1,30 @@
+Metadata-Version: 2.0
+Name: scipy-stack
+Version: 0.0.5
+Summary: Helper to install the SciPy stack
+Home-page: https://github.com/David-OConnor/scipy-stack
+Author: David O'Connor
+Author-email: david.alan.oconnor@gmail.com
+License: UNKNOWN
+Description-Content-Type: UNKNOWN
+Keywords: scipy-stack,scipy,numpy,pandas,jupyter
+Platform: UNKNOWN
+Requires-Dist: numpy (>=1.13.1)
+Requires-Dist: scipy (>=1.0.0)
+Requires-Dist: matplotlib (>=2.0.2)
+Requires-Dist: jupyter (>=1.0.0)
+Requires-Dist: pandas (>=0.20.3)
+Requires-Dist: sympy (>=1.1.1)
+Requires-Dist: nose (>=1.3.7)
+
+SciPy Stack download helper
+===========================
+
+This package simply has the packages that are part of the SciPy stack as dependencies, defined
+here: https://www.scipy.org/stackspec.html . It is unofficial and contains no code. Run 'pip install 
+scipy-stack' to install all official scipy-stack packages, if your system is able to compile them. Note that 
+this will install the non-MKL version of numpy.
+
+Now that Scipy v1.0.0 is available, this package should install properly on both Windows and Linux.
+
+

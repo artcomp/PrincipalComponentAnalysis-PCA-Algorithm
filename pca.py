@@ -15,7 +15,7 @@ df = df.drop('TR ID ', axis=1)
 
 def letraA():
 	descriptive_stats_df = df.describe(include='all')
-	# print(descriptive_stats_df)
+	print(descriptive_stats_df)
 
 
 def letraB():
@@ -102,6 +102,8 @@ def letraC():
 	components_stats = [cpu_impact, disk_1_impact, disk_2_impact]
 	percentages = applyPercentage(components_stats)
 
+
+	# plot impacto de cada recurso no sistema
 	plt.clf()
 	plt.bar(['CPU', 'Disk 1', 'Disk 2'], percentages )
 	plt.xlabel('Recurso')
@@ -110,7 +112,7 @@ def letraC():
 	plt.savefig('resources-impact.png', format='png')
 	plt.clf()
 
-
+	# scatterplot CPU x disk 2 (fatores de maior impacto)
 	plt.clf()
 	plt.scatter(normalized_data_frame['CPU'], normalized_data_frame['Disk 2'] )
 	plt.xlabel('CPU')
@@ -129,9 +131,9 @@ def main():
 			diretorio deste arquivo (pca.py)''')
 
 	letraA()
-	letraB()
-	letraC()
-	letraD()
+	# letraB()
+	# letraC()
+	# letraD()
 	
 
 if __name__ == '__main__':
