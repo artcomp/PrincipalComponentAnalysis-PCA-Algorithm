@@ -151,21 +151,22 @@ def main():
 
 
 	# pca scykitlearn
-	scyPCA(plot=0)
+	# scyPCA(plot=0)
 
-	num_clusters = [x for x in range(3,190)]
+	letraC()
+	# num_clusters = [x for x in range(3,190)]
 
-	data = [ [a,b] for a,b in zip(df['CPU'],(df['Disk 1'] + df['Disk 2']) ) ]
+	# data = [ [a,b] for a,b in zip(df['CPU'],(df['Disk 1'] + df['Disk 2']) ) ]
 
-	cv_s = list( map( lambda x: clusterization(data , x, 0), num_clusters) ) 
+	# cv_s = list( map( lambda x: clusterization(data , x, 0), num_clusters) ) 
 	
-	ctr = 1
-	if ctr:
-		plt.plot(num_clusters,cv_s)
-		plt.xlabel('Número de clusters (K)')
-		plt.ylabel('Coeficiente de Variação (CV)')
-		plt.title('Número ideal de clusters ')
-		plt.show()
+	# ctr = 1
+	# if ctr:
+	# 	plt.plot(num_clusters,cv_s)
+	# 	plt.xlabel('Número de clusters (K)')
+	# 	plt.ylabel('Coeficiente de Variação (CV)')
+	# 	plt.title('Número ideal de clusters ')
+	# 	plt.show()
 		
 
 	# ideal_k = 3
