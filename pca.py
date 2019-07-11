@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 import numpy as np
 from numpy import linalg as LA
-
-
+from sklearn.decomposition import PCA
+from kmeans import *
 
 file = r'DBMS-Performance-Monitor-Log.xls'
 df = pd.read_excel(file)
@@ -99,42 +99,78 @@ def letraC():
 	disk_1_impact = disk_1_square_sum / total_sum
 	disk_2_impact = disk_2_square_sum / total_sum
 
-	components_stats = [cpu_impact, disk_1_impact, disk_2_impact]
-	percentages = applyPercentage(components_stats)
 
+
+	components_stats = [cpu_impact, disk_1_impact, disk_2_impact]
+	percentages = applyPercentage(components_stats)	
 
 	# plot impacto de cada recurso no sistema
 	plt.clf()
 	plt.bar(['CPU', 'Disk 1', 'Disk 2'], percentages )
+	plt.show()
 	plt.xlabel('Recurso')
 	plt.ylabel('Porcentagem de impacto no sistema')
 	plt.title('Impacto de cada recurso no sistema')
 	plt.savefig('resources-impact.png', format='png')
 	plt.clf()
+	
 
 	# scatterplot CPU x disk 2 (fatores de maior impacto)
-	plt.clf()
-	plt.scatter(normalized_data_frame['CPU'], normalized_data_frame['Disk 2'] )
-	plt.xlabel('CPU')
-	plt.ylabel('Disk 2')
-	plt.title('Scatter Plot')
-	plt.savefig('scatter-plot.png', format='png')
-	plt.clf()
+	# plt.clf()
+	# plt.scatter(normalized_data_frame['CPU'], normalized_data_frame['Disk 2'] )
+	# plt.xlabel('CPU')
+	# plt.ylabel('Disk 2')
+	# plt.title('Scatter Plot')
+	# plt.savefig('scatter-plot.png', format='png')
+	# plt.clf()
 
 def letraD():
 	print('''\n\nLetra (d)\n\tO fator de maior impacto é a CPU, representado 80%.
 		 	\n\tAssim, pode ser unicamente utilizado para a clusterização dos dados.\n\n\n''')
 
+
+def scyPCA(plot):
+
+	pca = PCA(n_components=3)
+	pca.fit(df)
+	percentages = pca.explained_variance_ratio_
+	print('Resultado do PCA : \n\n\tCPU : %f\n\tDisk 1 : %f\n\tDisk 2 : %f' % (percentages[0],percentages[1],percentages[2]))
+
+	if plot != 0:
+		plt.clf()
+		plt.bar(['CPU', 'Disk 1', 'Disk 2'], applyPercentage(percentages) )
+		plt.show()
+		plt.xlabel('Recurso')
+		plt.ylabel('Porcentagem de impacto no sistema')
+		plt.title('Impacto de cada recurso no sistema')
+		plt.savefig('resources-impact.png', format='png')
+		plt.clf()
+
+
 def main():
 
-	print('''\n\nPara as questoes (a),(b) e (c), os gráficos estão sendo gerados no mesmo 
-			diretorio deste arquivo (pca.py)''')
 
-	letraA()
-	# letraB()
-	# letraC()
-	# letraD()
+	# pca scykitlearn
+	scyPCA(plot=0)
+
+	num_clusters = [x for x in range(3,190)]
+
+	data = [ [a,b] for a,b in zip(df['CPU'],(df['Disk 1'] + df['Disk 2']) ) ]
+
+	cv_s = list( map( lambda x: clusterization(data , x, 0), num_clusters) ) 
 	
+	ctr = 1
+	if ctr:
+		plt.plot(num_clusters,cv_s)
+		plt.xlabel('Número de clusters (K)')
+		plt.ylabel('Coeficiente de Variação (CV)')
+		plt.title('Número ideal de clusters ')
+		plt.show()
+		
 
+	# ideal_k = 3
+	# cv_ideal = clusterization(data, ideal_k, 1)
+
+	
 if __name__ == '__main__':
 	main()

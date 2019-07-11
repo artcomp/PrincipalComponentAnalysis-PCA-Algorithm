@@ -36,19 +36,24 @@ def intraClusterDistance(center, points):
 	return st_dev / average_intra_distance 
 
 
-def plotData(X,centers):
+def plotData(Y,centers):
+	X = np.array(Y)
 	plt.scatter(X[:,0],X[:,1], s=50, cmap='viridis')
 	plt.scatter(centers[:,0], centers[:,1], c='black', s=200, alpha=0.5)
+	plt.title('Número ideal de clusters')
+	plt.xlabel('CPU')
+	plt.ylabel('Disks (I/O)')
 	plt.show()
 
 
 
-def clusterization(X, num_clusters):
+def clusterization(X, num_clusters, plot):
 
 	kmeans = KMeans(n_clusters=num_clusters, random_state=0).fit(X)
 	kmeans.predict(X)
 
-	# plotData(X, kmeans.cluster_centers_)
+	if plot != 0:
+		plotData(X, kmeans.cluster_centers_)
 
 	#list of lists, the number os lists depends on
 	#the amount of clusters possible
@@ -64,20 +69,20 @@ def clusterization(X, num_clusters):
 	beta_cv = cv_intra_cluster / cv_inter_cluster
 	return beta_cv
 
-def main():
-	X = np.array([
-			[1, 2], [1, 4], [1, 0],
-			[10, 2], [10, 4], [10, 0]
-		])
+# def main():
+# 	X = np.array([
+# 			[1, 2], [1, 4], [1, 0],
+# 			[10, 2], [10, 4], [10, 0]
+# 		])
 
-	num_clusters = [x for x in range(3,14)]
+# 	num_clusters = [x for x in range(3,14)]
 
-	cv_s = list( map( lambda x: clusterization(X,x) , num_clusters) ) 
-	plt.plot(num_clusters,cv_s)
-	plt.xlabel('Número de clusters')
-	plt.ylabel('Coeficiente de Variação (CV)')
-	plt.title('Número ideal de clusters (K)')
-	plt.show()
+# 	cv_s = list( map( lambda x: clusterization(X,x) , num_clusters) ) 
+# 	plt.plot(num_clusters,cv_s)
+# 	plt.xlabel('Número de clusters')
+# 	plt.ylabel('Coeficiente de Variação (CV)')
+# 	plt.title('Número ideal de clusters (K)')
+# 	plt.show()
 	
-if __name__ == '__main__':
-	main()
+# if __name__ == '__main__':
+# 	main()
